@@ -18,7 +18,7 @@ def _render_frontmatter(node: RenderTreeNode, context: RenderContext) -> str:
     # Safety check - parse and dump yaml to ensure it is correctly formatted
     dump_stream = io.StringIO()
     try:
-        parsed = yaml.load(node.content)
+        parsed = yaml.load(node.content, Loader=yaml.Loader)
         yaml.dump(parsed, stream=dump_stream)
     except Exception as e:
         mdformat.renderer.LOGGER.warning(f"Invalid YAML in a front matter block: {e}.")
