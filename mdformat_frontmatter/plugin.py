@@ -6,6 +6,7 @@ import mdformat.renderer
 from mdformat.renderer import RenderContext, RenderTreeNode
 from mdformat.renderer.typing import Render
 from mdit_py_plugins.front_matter import front_matter_plugin
+import ruamel.yaml
 import yaml
 
 
@@ -18,8 +19,8 @@ def _render_frontmatter(node: RenderTreeNode, context: RenderContext) -> str:
     # Safety check - parse and dump yaml to ensure it is correctly formatted
     dump_stream = io.StringIO()
     try:
-        parsed = yaml.load(node.content, Loader=yaml.Loader)
-        yaml.dump(parsed, stream=dump_stream, sort_keys=False)
+        parsed = yaml.load(node.content, Loader=ruamel.yaml.RoundTripLoader)
+        yaml.dump(parsed, stream=dump_stream, sort_keys=False, Dumper=ruamel.yaml.RoundTripDumper)
     except Exception as e:
         mdformat.renderer.LOGGER.warning(f"Invalid YAML in a front matter block: {e}.")
         formatted_yaml = node.content + "\n"
