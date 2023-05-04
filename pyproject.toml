@@ -19,7 +19,7 @@ keywords = "mdformat,markdown,markdown-it"
 requires-python=">=3.7"
 requires=["mdformat >=0.7.0,<0.8.0",
           "mdit-py-plugins",
-          "ruamel.yaml"
+          "ruamel.yaml==0.17.21"
             ]
 
 [tool.flit.metadata.requires-extra]
